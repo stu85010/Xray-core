@@ -30,6 +30,10 @@ func getAuth(config *Config) (cipher.AEAD, error) {
 		return chacha20poly1305.New(key[:])
 	}
 
+	if security == protocol.SecurityType_XCHACHA20_POLY1305 {
+		return chacha20poly1305.NewX(key[:])
+	}
+
 	return nil, newError("unsupported security type")
 }
 

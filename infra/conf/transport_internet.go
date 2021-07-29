@@ -224,6 +224,8 @@ func (c *QUICConfig) Build() (proto.Message, error) {
 		st = protocol.SecurityType_AES128_GCM
 	case "chacha20-poly1305":
 		st = protocol.SecurityType_CHACHA20_POLY1305
+	case "xchacha20-poly1305":
+		st = protocol.SecurityType_XCHACHA20_POLY1305
 	default:
 		st = protocol.SecurityType_NONE
 	}

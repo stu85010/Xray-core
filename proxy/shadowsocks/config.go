@@ -50,6 +50,8 @@ func (a *MemoryAccount) GetCipherName() string {
 			return "AES_" + strconv.FormatInt(int64(keyBytes*8), 10) + "_GCM"
 		case reflect.ValueOf(createChacha20Poly1305).Pointer():
 			return "CHACHA20_POLY1305"
+		case reflect.ValueOf(createXChacha20Poly1305).Pointer():
+			return "XCHACHA20_POLY1305"
 		}
 	case *NoneCipher:
 		return "NONE"
@@ -68,6 +70,12 @@ func createAesGcm(key []byte) cipher.AEAD {
 
 func createChacha20Poly1305(key []byte) cipher.AEAD {
 	chacha20, err := chacha20poly1305.New(key)
+	common.Must(err)
+	return chacha20
+}
+
+func createXChacha20Poly1305(key []byte) cipher.AEAD {
+	chacha20, err := chacha20poly1305.NewX(key)
 	common.Must(err)
 	return chacha20
 }
@@ -99,6 +107,12 @@ func (a *Account) getCipher() (Cipher, error) {
 			KeyBytes:        32,
 			IVBytes:         32,
 			AEADAuthCreator: createChacha20Poly1305,
+		}, nil
+	case CipherType_XCHACHA20_POLY1305:
+		return &AEADCipher{
+			KeyBytes:        32,
+			IVBytes:         32,
+			AEADAuthCreator: createXChacha20Poly1305,
 		}, nil
 	case CipherType_NONE:
 		return NoneCipher{}, nil

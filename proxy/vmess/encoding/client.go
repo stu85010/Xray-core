@@ -182,6 +182,16 @@ func (c *ClientSession) EncodeRequestBody(request *protocol.RequestHeader, write
 			AdditionalDataGenerator: crypto.GenerateEmptyBytes(),
 		}
 		return crypto.NewAuthenticationWriter(auth, sizeParser, writer, request.Command.TransferType(), padding)
+	case protocol.SecurityType_XCHACHA20_POLY1305:
+		aead, err := chacha20poly1305.NewX(GenerateChacha20Poly1305Key(c.requestBodyKey[:]))
+		common.Must(err)
+
+		auth := &crypto.AEADAuthenticator{
+			AEAD:                    aead,
+			NonceGenerator:          GenerateChunkNonce(c.requestBodyIV[:], uint32(aead.NonceSize())),
+			AdditionalDataGenerator: crypto.GenerateEmptyBytes(),
+		}
+		return crypto.NewAuthenticationWriter(auth, sizeParser, writer, request.Command.TransferType(), padding)
 	default:
 		panic("Unknown security type.")
 	}
@@ -315,6 +325,15 @@ func (c *ClientSession) DecodeResponseBody(request *protocol.RequestHeader, read
 		return crypto.NewAuthenticationReader(auth, sizeParser, reader, request.Command.TransferType(), padding)
 	case protocol.SecurityType_CHACHA20_POLY1305:
 		aead, _ := chacha20poly1305.New(GenerateChacha20Poly1305Key(c.responseBodyKey[:]))
+
+		auth := &crypto.AEADAuthenticator{
+			AEAD:                    aead,
+			NonceGenerator:          GenerateChunkNonce(c.responseBodyIV[:], uint32(aead.NonceSize())),
+			AdditionalDataGenerator: crypto.GenerateEmptyBytes(),
+		}
+		return crypto.NewAuthenticationReader(auth, sizeParser, reader, request.Command.TransferType(), padding)
+	case protocol.SecurityType_XCHACHA20_POLY1305:
+		aead, _ := chacha20poly1305.NewX(GenerateChacha20Poly1305Key(c.responseBodyKey[:]))
 
 		auth := &crypto.AEADAuthenticator{
 			AEAD:                    aead,

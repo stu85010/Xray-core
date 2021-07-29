@@ -12,8 +12,9 @@ enum SecurityType {
   AUTO = 2;
   AES128_GCM = 3;
   CHACHA20_POLY1305 = 4;
-  NONE = 5;
-  ZERO = 6;
+  XCHACHA20_POLY1305 = 5;
+  NONE = 6;
+  ZERO = 7;
 }
 
 message SecurityConfig {

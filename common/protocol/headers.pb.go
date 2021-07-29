@@ -33,8 +33,9 @@ const (
 	SecurityType_AUTO              SecurityType = 2
 	SecurityType_AES128_GCM        SecurityType = 3
 	SecurityType_CHACHA20_POLY1305 SecurityType = 4
-	SecurityType_NONE              SecurityType = 5
-	SecurityType_ZERO              SecurityType = 6
+	SecurityType_XCHACHA20_POLY1305 SecurityType = 5
+	SecurityType_NONE              SecurityType = 6
+	SecurityType_ZERO              SecurityType = 7
 )
 
 // Enum value maps for SecurityType.
@@ -45,8 +46,9 @@ var (
 		2: "AUTO",
 		3: "AES128_GCM",
 		4: "CHACHA20_POLY1305",
-		5: "NONE",
-		6: "ZERO",
+		5: "XCHACHA20_POLY1305",
+		6: "NONE",
+		7: "ZERO",
 	}
 	SecurityType_value = map[string]int32{
 		"UNKNOWN":           0,
@@ -54,8 +56,9 @@ var (
 		"AUTO":              2,
 		"AES128_GCM":        3,
 		"CHACHA20_POLY1305": 4,
-		"NONE":              5,
-		"ZERO":              6,
+		"XCHACHA20_POLY1305": 5,
+		"NONE":              6,
+		"ZERO":              7,
 	}
 )
 

@@ -38,7 +38,8 @@ const (
 	CipherType_AES_128_GCM       CipherType = 5
 	CipherType_AES_256_GCM       CipherType = 6
 	CipherType_CHACHA20_POLY1305 CipherType = 7
-	CipherType_NONE              CipherType = 8
+	CipherType_XCHACHA20_POLY1305 CipherType = 8
+	CipherType_NONE              CipherType = 9
 )
 
 // Enum value maps for CipherType.
@@ -52,7 +53,8 @@ var (
 		5: "AES_128_GCM",
 		6: "AES_256_GCM",
 		7: "CHACHA20_POLY1305",
-		8: "NONE",
+		8: "XCHACHA20_POLY1305",
+		9: "NONE",
 	}
 	CipherType_value = map[string]int32{
 		"UNKNOWN":           0,
@@ -63,7 +65,8 @@ var (
 		"AES_128_GCM":       5,
 		"AES_256_GCM":       6,
 		"CHACHA20_POLY1305": 7,
-		"NONE":              8,
+		"XCHACHA20_POLY1305": 8,
+		"NONE":              9,
 	}
 )
 

@@ -83,6 +83,7 @@ func (sc *SecurityConfig) GetSecurityType() SecurityType {
 			return SecurityType_AES128_GCM
 		}
 		return SecurityType_CHACHA20_POLY1305
+		// return SecurityType_XCHACHA20_POLY1305
 	}
 	return sc.Type
 }
